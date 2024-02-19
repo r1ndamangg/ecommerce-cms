@@ -862,6 +862,34 @@ export interface ApiCartItemCartItem extends Schema.CollectionType {
   };
 }
 
+export interface ApiCityCity extends Schema.CollectionType {
+  collectionName: 'cities';
+  info: {
+    singularName: 'city';
+    pluralName: 'cities';
+    displayName: 'Cities';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    slug: Attribute.UID<'api::city.city', 'name'>;
+    vendors: Attribute.Relation<
+      'api::city.city',
+      'manyToMany',
+      'api::vendor.vendor'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::city.city', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::city.city', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOrderOrder extends Schema.CollectionType {
   collectionName: 'orders';
   info: {
@@ -871,7 +899,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     phone: Attribute.String;
@@ -907,7 +935,6 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::order.order',
       'oneToOne',
@@ -932,7 +959,7 @@ export interface ApiOrderItemOrderItem extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     product: Attribute.Relation<
@@ -945,11 +972,9 @@ export interface ApiOrderItemOrderItem extends Schema.CollectionType {
       'manyToOne',
       'api::order.order'
     >;
-    totalPrice: Attribute.Integer;
     quantity: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::order-item.order-item',
       'oneToOne',
@@ -1029,6 +1054,11 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'manyToOne',
       'api::product-category.product-category'
     >;
+    vendors: Attribute.Relation<
+      'api::product.product',
+      'manyToMany',
+      'api::vendor.vendor'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1090,6 +1120,52 @@ export interface ApiProductCategoryProductCategory
   };
 }
 
+export interface ApiVendorVendor extends Schema.CollectionType {
+  collectionName: 'vendors';
+  info: {
+    singularName: 'vendor';
+    pluralName: 'vendors';
+    displayName: 'Vendors';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    cities: Attribute.Relation<
+      'api::vendor.vendor',
+      'manyToMany',
+      'api::city.city'
+    >;
+    products: Attribute.Relation<
+      'api::vendor.vendor',
+      'manyToMany',
+      'api::product.product'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::vendor.vendor',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::vendor.vendor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::vendor.vendor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1110,11 +1186,13 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::cart.cart': ApiCartCart;
       'api::cart-item.cart-item': ApiCartItemCartItem;
+      'api::city.city': ApiCityCity;
       'api::order.order': ApiOrderOrder;
       'api::order-item.order-item': ApiOrderItemOrderItem;
       'api::payment.payment': ApiPaymentPayment;
       'api::product.product': ApiProductProduct;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
+      'api::vendor.vendor': ApiVendorVendor;
     }
   }
 }

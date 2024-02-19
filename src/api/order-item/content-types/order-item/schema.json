@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -22,9 +22,6 @@
       "relation": "manyToOne",
       "target": "api::order.order",
       "inversedBy": "order_items"
-    },
-    "totalPrice": {
-      "type": "integer"
     },
     "quantity": {
       "type": "integer"
