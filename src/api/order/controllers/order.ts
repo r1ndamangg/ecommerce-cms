@@ -3,6 +3,7 @@
  */
 
 import { factories } from "@strapi/strapi";
+import order from "../routes/order";
 
 export default factories.createCoreController(
   "api::order.order",
@@ -48,6 +49,10 @@ export default factories.createCoreController(
         populate: ["user", "order_items"],
       });
       return response;
+    },
+    async update(ctx) {
+      console.log("params", ctx.params);
+      return JSON.stringify(ctx.params);
     },
   })
 );

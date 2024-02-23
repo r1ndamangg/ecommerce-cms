@@ -773,6 +773,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'api::cart.cart'
     >;
+    payments: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::payment.payment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -799,7 +804,7 @@ export interface ApiCartCart extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     users_permissions_user: Attribute.Relation<
@@ -814,7 +819,6 @@ export interface ApiCartCart extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
@@ -828,9 +832,10 @@ export interface ApiCartItemCartItem extends Schema.CollectionType {
     singularName: 'cart-item';
     pluralName: 'cart-items';
     displayName: 'Cart Items';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     product: Attribute.Relation<
@@ -846,7 +851,6 @@ export interface ApiCartItemCartItem extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::cart-item.cart-item',
       'oneToOne',
@@ -999,7 +1003,7 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     provider: Attribute.String;
@@ -1010,9 +1014,13 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
       'api::order.order'
     >;
     phone: Attribute.String;
+    users_permissions_user: Attribute.Relation<
+      'api::payment.payment',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::payment.payment',
       'oneToOne',
@@ -1102,6 +1110,7 @@ export interface ApiProductCategoryProductCategory
       'oneToOne',
       'api::product-category.product-category'
     >;
+    slug: Attribute.UID<'api::product-category.product-category', 'name'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

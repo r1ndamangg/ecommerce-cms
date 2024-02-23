@@ -4,10 +4,11 @@
   "info": {
     "singularName": "cart-item",
     "pluralName": "cart-items",
-    "displayName": "Cart Items"
+    "displayName": "Cart Items",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
