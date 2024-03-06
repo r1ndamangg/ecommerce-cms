@@ -866,6 +866,58 @@ export interface ApiCartItemCartItem extends Schema.CollectionType {
   };
 }
 
+export interface ApiCartPageCartPage extends Schema.SingleType {
+  collectionName: 'cart_pages';
+  info: {
+    singularName: 'cart-page';
+    pluralName: 'cart-pages';
+    displayName: 'Cart Page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    title: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    applyButton: Attribute.Text &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::cart-page.cart-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::cart-page.cart-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::cart-page.cart-page',
+      'oneToMany',
+      'api::cart-page.cart-page'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiCityCity extends Schema.CollectionType {
   collectionName: 'cities';
   info: {
@@ -1195,6 +1247,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::cart.cart': ApiCartCart;
       'api::cart-item.cart-item': ApiCartItemCartItem;
+      'api::cart-page.cart-page': ApiCartPageCartPage;
       'api::city.city': ApiCityCity;
       'api::order.order': ApiOrderOrder;
       'api::order-item.order-item': ApiOrderItemOrderItem;

@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "cart_pages",
+  "info": {
+    "singularName": "cart-page",
+    "pluralName": "cart-pages",
+    "displayName": "Cart Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "applyButton": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text"
+    }
+  }
+}
