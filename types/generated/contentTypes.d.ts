@@ -982,6 +982,107 @@ export interface ApiCityCity extends Schema.CollectionType {
   };
 }
 
+export interface ApiColorColor extends Schema.CollectionType {
+  collectionName: 'colors';
+  info: {
+    singularName: 'color';
+    pluralName: 'colors';
+    displayName: 'Color';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    code: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::color.color',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::color.color',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMemoryMemory extends Schema.CollectionType {
+  collectionName: 'memories';
+  info: {
+    singularName: 'memory';
+    pluralName: 'memories';
+    displayName: 'Memory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    capacity: Attribute.Integer;
+    unit: Attribute.Relation<
+      'api::memory.memory',
+      'oneToOne',
+      'api::unit.unit'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::memory.memory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::memory.memory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiModelModel extends Schema.CollectionType {
+  collectionName: 'models';
+  info: {
+    singularName: 'model';
+    pluralName: 'models';
+    displayName: 'Model';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    products: Attribute.Relation<
+      'api::model.model',
+      'oneToMany',
+      'api::product.product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::model.model',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::model.model',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOrderOrder extends Schema.CollectionType {
   collectionName: 'orders';
   info: {
@@ -1160,6 +1261,21 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'manyToOne',
       'api::brand.brand'
     >;
+    model: Attribute.Relation<
+      'api::product.product',
+      'manyToOne',
+      'api::model.model'
+    >;
+    color: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'api::color.color'
+    >;
+    memory: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'api::memory.memory'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1219,6 +1335,27 @@ export interface ApiProductCategoryProductCategory
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUnitUnit extends Schema.CollectionType {
+  collectionName: 'units';
+  info: {
+    singularName: 'unit';
+    pluralName: 'units';
+    displayName: 'Unit';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::unit.unit', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::unit.unit', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1292,11 +1429,15 @@ declare module '@strapi/types' {
       'api::cart-item.cart-item': ApiCartItemCartItem;
       'api::cart-page.cart-page': ApiCartPageCartPage;
       'api::city.city': ApiCityCity;
+      'api::color.color': ApiColorColor;
+      'api::memory.memory': ApiMemoryMemory;
+      'api::model.model': ApiModelModel;
       'api::order.order': ApiOrderOrder;
       'api::order-item.order-item': ApiOrderItemOrderItem;
       'api::payment.payment': ApiPaymentPayment;
       'api::product.product': ApiProductProduct;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
+      'api::unit.unit': ApiUnitUnit;
       'api::vendor.vendor': ApiVendorVendor;
     }
   }

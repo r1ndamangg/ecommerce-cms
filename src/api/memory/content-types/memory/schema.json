@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "memories",
+  "info": {
+    "singularName": "memory",
+    "pluralName": "memories",
+    "displayName": "Memory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "capacity": {
+      "type": "integer"
+    },
+    "unit": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::unit.unit"
+    }
+  }
+}
