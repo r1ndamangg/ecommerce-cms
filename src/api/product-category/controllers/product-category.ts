@@ -10,16 +10,13 @@ export default factories.createCoreController(
     async getCategoryBySlug(ctx) {
       if (!ctx.params.slug) throw new Error("Slug is required");
 
-      const categories = await strapi.entityService.findMany(
-        "api::product-category.product-category",
-        {
-          filters: {
-            slug: ctx.params.slug,
-          },
-        }
-      );
+      const category = await strapi.db
+        .query("api::product-category.product-category")
+        .findOne({
+          where: { slug: ctx.params.slug },
+        });
 
-      return categories[0];
+      return category;
     },
     async getParentCategories() {
       return strapi.entityService.findMany(

@@ -40,9 +40,6 @@
     "descriptionSeo": {
       "type": "text"
     },
-    "bonusPrice": {
-      "type": "integer"
-    },
     "descriptionAlt": {
       "type": "richtext"
     },
@@ -54,12 +51,6 @@
       "relation": "manyToOne",
       "target": "api::product-category.product-category",
       "inversedBy": "products"
-    },
-    "vendors": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::vendor.vendor",
-      "mappedBy": "products"
     },
     "brand": {
       "type": "relation",
@@ -82,6 +73,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::memory.memory"
+    },
+    "bonusAmount": {
+      "type": "integer"
     }
   }
 }

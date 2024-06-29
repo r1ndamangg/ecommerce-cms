@@ -4,8 +4,7 @@
   "info": {
     "singularName": "vendor",
     "pluralName": "vendors",
-    "displayName": "Vendors",
-    "description": ""
+    "displayName": "Vendors"
   },
   "options": {
     "draftAndPublish": true
@@ -14,23 +13,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "cities": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::city.city",
-      "inversedBy": "vendors"
-    },
-    "products": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "inversedBy": "vendors"
-    },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
     }
   }
 }

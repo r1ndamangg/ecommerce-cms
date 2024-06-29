@@ -3,7 +3,6 @@
  */
 
 import { factories } from "@strapi/strapi";
-import { ApiProductProduct } from "../../../../types/generated/contentTypes";
 
 export default factories.createCoreController(
   "api::product.product",

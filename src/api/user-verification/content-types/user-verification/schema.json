@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_verifications",
+  "info": {
+    "singularName": "user-verification",
+    "pluralName": "user-verifications",
+    "displayName": "UserVerification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "canceled",
+        "max_attempts_reached",
+        "deleted",
+        "failed",
+        "expired"
+      ]
+    }
+  }
+}

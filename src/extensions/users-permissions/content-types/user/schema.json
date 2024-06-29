@@ -23,7 +23,11 @@
       "type": "email",
       "minLength": 6,
       "configurable": false,
-      "required": true
+      "required": false
+    },
+    "phoneNumber": {
+      "type": "string",
+      "unique": true
     },
     "provider": {
       "type": "string",

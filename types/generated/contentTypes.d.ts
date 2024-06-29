@@ -744,10 +744,10 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
         minLength: 3;
       }>;
     email: Attribute.Email &
-      Attribute.Required &
       Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phoneNumber: Attribute.String & Attribute.Unique;
     provider: Attribute.String;
     password: Attribute.Password &
       Attribute.Private &
@@ -967,11 +967,6 @@ export interface ApiCityCity extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     slug: Attribute.UID<'api::city.city', 'name'>;
-    vendors: Attribute.Relation<
-      'api::city.city',
-      'manyToMany',
-      'api::vendor.vendor'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1243,18 +1238,12 @@ export interface ApiProductProduct extends Schema.CollectionType {
     slug: Attribute.UID<'api::product.product', 'name'>;
     hidden: Attribute.Boolean;
     descriptionSeo: Attribute.Text;
-    bonusPrice: Attribute.Integer;
     descriptionAlt: Attribute.RichText;
     description: Attribute.RichText;
     product_category: Attribute.Relation<
       'api::product.product',
       'manyToOne',
       'api::product-category.product-category'
-    >;
-    vendors: Attribute.Relation<
-      'api::product.product',
-      'manyToMany',
-      'api::vendor.vendor'
     >;
     brand: Attribute.Relation<
       'api::product.product',
@@ -1276,6 +1265,7 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'oneToOne',
       'api::memory.memory'
     >;
+    bonusAmount: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1360,34 +1350,60 @@ export interface ApiUnitUnit extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserVerificationUserVerification
+  extends Schema.CollectionType {
+  collectionName: 'user_verifications';
+  info: {
+    singularName: 'user-verification';
+    pluralName: 'user-verifications';
+    displayName: 'UserVerification';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    phone: Attribute.String & Attribute.Required;
+    status: Attribute.Enumeration<
+      [
+        'pending',
+        'approved',
+        'canceled',
+        'max_attempts_reached',
+        'deleted',
+        'failed',
+        'expired'
+      ]
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-verification.user-verification',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-verification.user-verification',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiVendorVendor extends Schema.CollectionType {
   collectionName: 'vendors';
   info: {
     singularName: 'vendor';
     pluralName: 'vendors';
     displayName: 'Vendors';
-    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     name: Attribute.String;
-    cities: Attribute.Relation<
-      'api::vendor.vendor',
-      'manyToMany',
-      'api::city.city'
-    >;
-    products: Attribute.Relation<
-      'api::vendor.vendor',
-      'manyToMany',
-      'api::product.product'
-    >;
-    users_permissions_user: Attribute.Relation<
-      'api::vendor.vendor',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1438,6 +1454,7 @@ declare module '@strapi/types' {
       'api::product.product': ApiProductProduct;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::unit.unit': ApiUnitUnit;
+      'api::user-verification.user-verification': ApiUserVerificationUserVerification;
       'api::vendor.vendor': ApiVendorVendor;
     }
   }

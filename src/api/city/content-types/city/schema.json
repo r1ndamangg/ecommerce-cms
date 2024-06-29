@@ -17,12 +17,6 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
-    },
-    "vendors": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::vendor.vendor",
-      "mappedBy": "cities"
     }
   }
 }
