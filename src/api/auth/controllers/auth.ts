@@ -5,6 +5,31 @@ type VerificationStatus =
   ApiUserVerificationUserVerification["attributes"]["status"]["enum"][number];
 
 export default {
+  async getUserStatus(ctx) {
+    const { phone } = ctx.request.query;
+
+    if (!phone) {
+      return ctx.badRequest("phone is required");
+    }
+
+    const user = await strapi.db
+      .query("plugin::users-permissions.user")
+      .findOne({
+        where: {
+          phoneNumber: phone,
+        },
+      });
+
+    if (!user) {
+      return {
+        status: "NOT_REGISTERED",
+      };
+    }
+
+    return {
+      status: "REGISTERED",
+    };
+  },
   async getOTP(ctx) {
     const { phone } = ctx.request.body;
 

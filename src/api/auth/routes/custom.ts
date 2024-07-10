@@ -1,6 +1,14 @@
 export default {
   routes: [
     {
+      method: "GET",
+      path: "/auth/get-user-status",
+      handler: "auth.getUserStatus",
+      config: {
+        auth: false,
+      },
+    },
+    {
       method: "POST",
       path: "/auth/get-otp",
       handler: "auth.getOTP",
