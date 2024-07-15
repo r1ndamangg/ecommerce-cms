@@ -23,13 +23,9 @@ export default factories.createCoreController(
         "api::product-category.product-category",
         {
           filters: {
-            $and: [
-              {
-                parent_category: {
-                  id: null,
-                },
-              },
-            ],
+            parent_category: {
+              id: null,
+            },
           },
           populate: ["icon"],
           publicationState: "live",

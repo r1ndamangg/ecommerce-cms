@@ -10,8 +10,8 @@ export default {
     },
     {
       method: "POST",
-      path: "/auth/get-otp",
-      handler: "auth.getOTP",
+      path: "/auth/send-otp",
+      handler: "auth.sendOTP",
       config: {
         auth: false,
       },

@@ -743,11 +743,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
-    email: Attribute.Email &
-      Attribute.SetMinMaxLength<{
-        minLength: 6;
-      }>;
-    phoneNumber: Attribute.String & Attribute.Unique;
     provider: Attribute.String;
     password: Attribute.Password &
       Attribute.Private &
@@ -763,6 +758,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    phoneNumber: Attribute.String & Attribute.Unique;
     orders: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
@@ -778,6 +774,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::payment.payment'
     >;
+    email: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

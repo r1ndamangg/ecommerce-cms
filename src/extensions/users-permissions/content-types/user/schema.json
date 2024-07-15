@@ -19,16 +19,6 @@
       "configurable": false,
       "required": true
     },
-    "email": {
-      "type": "email",
-      "minLength": 6,
-      "configurable": false,
-      "required": false
-    },
-    "phoneNumber": {
-      "type": "string",
-      "unique": true
-    },
     "provider": {
       "type": "string",
       "configurable": false
@@ -69,6 +59,10 @@
       "inversedBy": "users",
       "configurable": false
     },
+    "phoneNumber": {
+      "type": "string",
+      "unique": true
+    },
     "orders": {
       "type": "relation",
       "relation": "oneToMany",
@@ -86,6 +80,9 @@
       "relation": "oneToMany",
       "target": "api::payment.payment",
       "mappedBy": "users_permissions_user"
+    },
+    "email": {
+      "type": "string"
     }
   }
 }

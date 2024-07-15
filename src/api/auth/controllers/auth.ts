@@ -30,7 +30,7 @@ export default {
       status: "REGISTERED",
     };
   },
-  async getOTP(ctx) {
+  async sendOTP(ctx) {
     const { phone } = ctx.request.body;
 
     if (!phone) {
@@ -71,6 +71,10 @@ export default {
 
     if (!code) {
       errors.push({ message: "OTP code is required", param: "code" });
+    }
+
+    if (!phone) {
+      errors.push({ message: "phone is required", param: "phone" });
     }
 
     if (errors.length) {
@@ -159,16 +163,33 @@ export default {
       return ctx.badRequest("user have not approved verification");
     }
 
-    const user = await strapi.entityService.create(
-      "plugin::users-permissions.user",
-      {
-        data: {
-          username: phone,
-          phoneNumber: phone,
-          password: password,
+    const role = (
+      await strapi.entityService.findMany("plugin::users-permissions.role", {
+        filters: {
+          name: "Authenticated",
         },
-      }
-    );
-    return user;
+      })
+    )?.[0];
+
+    if (!role) {
+      throw new Error("Can't find role");
+    }
+
+    await strapi.entityService.create("plugin::users-permissions.user", {
+      data: {
+        username: phone,
+        phoneNumber: phone,
+        password: password,
+        confirmed: true,
+        provider: "local",
+        role: {
+          id: role.id,
+        },
+      },
+    });
+
+    return {
+      message: "user registered",
+    };
   },
 };
