@@ -775,6 +775,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'api::payment.payment'
     >;
     email: Attribute.String;
+    firstName: Attribute.String;
+    lastName: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
